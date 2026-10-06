@@ -1,0 +1,40 @@
+﻿@model List<TenantListItemDto>
+@{
+    ViewData["Title"] = "Tenant Seçimi";
+}
+
+<h4 class="mb-4">Yönetilecek Tenant</h4>
+
+<partial name="_Message" />
+
+<div class="row g-3">
+    @foreach (var tenant in Model)
+    {
+        <div class="col-md-6">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="card-title mb-1">@tenant.Name</h5>
+                            <code class="small text-muted">@tenant.Slug</code>
+                        </div>
+                        <span class="badge bg-@(tenant.IsActive ? "success" : "secondary")">
+                            @(tenant.IsActive ? "Aktif" : "Pasif")
+                        </span>
+                    </div>
+
+                    <div class="d-flex gap-4 mb-3 text-muted small">
+                        <span><strong class="text-dark fs-6">@tenant.UserCount</strong> kullanıcı</span>
+                        <span><strong class="text-dark fs-6">@tenant.OrderCount</strong> sipariş</span>
+                    </div>
+
+                    <form asp-action="Select" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="id" value="@tenant.Id" />
+                        <button type="submit" class="btn btn-primary w-100">Bu Tenantı Yönet</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+</div>

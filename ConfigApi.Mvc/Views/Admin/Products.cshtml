@@ -1,0 +1,67 @@
+﻿@model List<ProductAdminDto>
+@{
+    ViewData["Title"] = "Ürün Yönetimi";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">Ürünler</h4>
+    <div class="d-flex gap-2">
+        <partial name="_AdminNav" />
+        <a asp-action="CreateProduct" class="btn btn-sm btn-primary">+ Yeni Ürün</a>
+    </div>
+</div>
+
+<partial name="_Message" />
+
+@if (!Model.Any())
+{
+    <div class="alert alert-light border text-center py-5">Henüz ürün eklenmemiş.</div>
+}
+else
+{
+    <table class="table align-middle bg-white">
+        <thead class="table-light">
+            <tr>
+                <th>Ürün</th>
+                <th class="text-end">Fiyat</th>
+                <th class="text-center">Stok</th>
+                <th>Durum</th>
+                <th class="text-end"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model)
+            {
+                <tr class="@(product.IsActive ? "" : "opacity-50")">
+                    <td>
+                        <div class="fw-semibold">@product.Name</div>
+                        <small class="text-muted">@product.Description</small>
+                    </td>
+                    <td class="text-end">@product.Price.ToString("N2") ₺</td>
+                    <td class="text-center">
+                        <span class="badge bg-@(product.Stock > 10 ? "success" : product.Stock > 0 ? "warning text-dark" : "danger")">
+                            @product.Stock
+                        </span>
+                    </td>
+                    <td>
+                        <span class="badge bg-@(product.IsActive ? "success" : "secondary")">
+                            @(product.IsActive ? "Aktif" : "Pasif")
+                        </span>
+                    </td>
+                    <td class="text-end">
+                        <a asp-action="EditProduct" asp-route-id="@product.Id" class="btn btn-sm btn-outline-primary">Düzenle</a>
+
+                        <form asp-action="ToggleProduct" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@product.Id" />
+                            <input type="hidden" name="isActive" value="@product.IsActive.ToString().ToLowerInvariant()" />
+                            <button type="submit" class="btn btn-sm btn-outline-@(product.IsActive ? "warning" : "success")">
+                                @(product.IsActive ? "Pasife Al" : "Aktifleştir")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
