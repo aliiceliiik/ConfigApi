@@ -1,0 +1,63 @@
+﻿@model OrderDto
+@{
+    ViewData["Title"] = $"Sipariş {Model.OrderNumber}";
+}
+
+<partial name="_Message" />
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="mb-1">Sipariş @Model.OrderNumber</h4>
+        <small class="text-muted">@Model.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</small>
+    </div>
+    <span class="badge bg-info text-dark fs-6">@Model.Status</span>
+</div>
+
+<table class="table bg-white">
+    <thead class="table-light">
+        <tr>
+            <th>Ürün</th>
+            <th class="text-end">Birim Fiyat</th>
+            <th class="text-center">Adet</th>
+            <th class="text-end">Tutar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td class="text-end">@item.UnitPrice.ToString("N2") ₺</td>
+                <td class="text-center">@item.Quantity</td>
+                <td class="text-end">@item.LineTotal.ToString("N2") ₺</td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr class="table-light">
+            <td colspan="3" class="text-end fw-semibold">Toplam</td>
+            <td class="text-end fs-5 fw-bold">@Model.TotalAmount.ToString("N2") ₺</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <h6 class="card-title">Durum Değiştir</h6>
+
+        <form asp-action="UpdateStatus" method="post" class="d-flex gap-2" style="max-width:380px">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <select name="status" class="form-select">
+                <option value="0">Beklemede</option>
+                <option value="1">Ödendi</option>
+                <option value="2">Kargoda</option>
+                <option value="3">Tamamlandı</option>
+                <option value="4">İptal</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        </form>
+    </div>
+</div>
+
+<a asp-action="Orders" class="btn btn-outline-secondary mt-3">Siparişlere Dön</a>

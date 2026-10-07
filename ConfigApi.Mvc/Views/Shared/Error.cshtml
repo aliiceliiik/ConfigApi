@@ -1,0 +1,12 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Hata";
+}
+
+<div class="alert alert-danger">
+    <h4 class="alert-heading">Bir hata oluştu</h4>
+    @if (Model.ShowRequestId)
+    {
+        <p class="mb-0">İstek kimliği: <code>@Model.RequestId</code></p>
+    }
+</div>

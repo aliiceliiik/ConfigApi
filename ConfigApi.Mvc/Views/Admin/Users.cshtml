@@ -1,0 +1,41 @@
+﻿@model List<UserListItemDto>
+@{
+    ViewData["Title"] = "Kullanıcılar";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">Kullanıcılar</h4>
+    <partial name="_AdminNav" />
+</div>
+
+<partial name="_Message" />
+
+<table class="table align-middle bg-white">
+    <thead class="table-light">
+        <tr>
+            <th>Ad Soyad</th>
+            <th>E-posta</th>
+            <th>Rol</th>
+            <th class="text-center">Sipariş</th>
+            <th>Kayıt</th>
+            <th>Durum</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.FullName</td>
+                <td>@user.Email</td>
+                <td><span class="badge bg-secondary">@user.Role</span></td>
+                <td class="text-center">@user.OrderCount</td>
+                <td>@user.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                <td>
+                    <span class="badge bg-@(user.IsActive ? "success" : "danger")">
+                        @(user.IsActive ? "Aktif" : "Pasif")
+                    </span>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

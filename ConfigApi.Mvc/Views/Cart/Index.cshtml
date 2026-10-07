@@ -1,0 +1,80 @@
+﻿@model CartDto
+@{
+    ViewData["Title"] = "Sepetim";
+}
+
+<h4 class="mb-4">Sepetim</h4>
+
+<partial name="_Message" />
+
+@if (!Model.Items.Any())
+{
+    <div class="alert alert-light border text-center py-5">
+        Sepetiniz boş.
+        <a asp-controller="Products" asp-action="Index" class="d-block mt-2">Ürünlere göz atın</a>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table align-middle bg-white">
+            <thead class="table-light">
+                <tr>
+                    <th>Ürün</th>
+                    <th class="text-end">Birim Fiyat</th>
+                    <th style="width:180px">Adet</th>
+                    <th class="text-end">Tutar</th>
+                    <th style="width:60px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <td>
+                            @item.ProductName
+                            @if (item.Quantity > item.AvailableStock)
+                            {
+                                <div class="text-danger small">
+                                    Stok yetersiz (@item.AvailableStock adet kaldı)
+                                </div>
+                            }
+                        </td>
+                        <td class="text-end">@item.UnitPrice.ToString("N2") ₺</td>
+                        <td>
+                            <form asp-action="Update" method="post" class="d-flex gap-1">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="itemId" value="@item.Id" />
+                                <input type="number" name="quantity" value="@item.Quantity"
+                                       min="1" max="100" class="form-control form-control-sm" style="width:75px" />
+                                <button type="submit" class="btn btn-sm btn-outline-secondary">Güncelle</button>
+                            </form>
+                        </td>
+                        <td class="text-end fw-semibold">@item.LineTotal.ToString("N2") ₺</td>
+                        <td>
+                            <form asp-action="Remove" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="itemId" value="@item.Id" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger">&times;</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr class="table-light">
+                    <td colspan="3" class="text-end fw-semibold">Genel Toplam</td>
+                    <td class="text-end fs-5 fw-bold">@Model.Total.ToString("N2") ₺</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <form asp-controller="Orders" asp-action="Checkout" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-success btn-lg">Siparişi Tamamla</button>
+        </form>
+    </div>
+}
