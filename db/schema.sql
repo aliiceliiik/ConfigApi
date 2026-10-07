@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿IF DB_ID('ConfigApiDb') IS NULL
+=======
+IF DB_ID('ConfigApiDb') IS NULL
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     CREATE DATABASE ConfigApiDb;
 GO
 
@@ -83,11 +87,14 @@ IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_Products_Tenant_Active
 CREATE INDEX IX_Products_Tenant_Active ON Products(TenantId, IsActive) INCLUDE (Name, Price);
 GO
 
+<<<<<<< HEAD
 IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_Products_Tenant_Active_Name')
 CREATE INDEX IX_Products_Tenant_Active_Name
     ON Products(TenantId, IsActive, Name) INCLUDE (Price, Stock);
 GO
 
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 IF OBJECT_ID('dbo.Carts', 'U') IS NULL
 CREATE TABLE Carts (
     Id         UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID(),

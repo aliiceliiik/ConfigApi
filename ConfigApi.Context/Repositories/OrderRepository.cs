@@ -8,8 +8,12 @@ namespace ConfigApi.Context.Repositories;
 
 public interface IOrderRepository
 {
+<<<<<<< HEAD
     Task<(Guid orderId, string orderNumber, IReadOnlyList<Guid> productIds)> CreateFromCartAsync(
         Guid userId, Guid cartId);
+=======
+    Task<(Guid orderId, string orderNumber)> CreateFromCartAsync(Guid userId, Guid cartId);
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     Task<IEnumerable<OrderListItemDto>> GetForUserAsync(Guid userId);
     Task<IEnumerable<OrderListItemDto>> GetForTenantAsync();
     Task<OrderDto?> GetDetailAsync(Guid orderId, Guid? restrictToUserId);
@@ -40,8 +44,12 @@ public class OrderRepository : TenantScopedRepository, IOrderRepository
           AND   p.TenantId = @TenantId
           AND   p.IsActive = 1;";
 
+<<<<<<< HEAD
     public async Task<(Guid orderId, string orderNumber, IReadOnlyList<Guid> productIds)>
         CreateFromCartAsync(Guid userId, Guid cartId)
+=======
+    public async Task<(Guid orderId, string orderNumber)> CreateFromCartAsync(Guid userId, Guid cartId)
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     {
         using var conn = Factory.Create();
         conn.Open();
@@ -98,7 +106,11 @@ public class OrderRepository : TenantScopedRepository, IOrderRepository
                 "DELETE FROM CartItems WHERE CartId = @CartId;", new { CartId = cartId }, tx);
 
             tx.Commit();
+<<<<<<< HEAD
             return (orderId, orderNumber, lines.Select(l => l.ProductId).ToList());
+=======
+            return (orderId, orderNumber);
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         }
         catch
         {

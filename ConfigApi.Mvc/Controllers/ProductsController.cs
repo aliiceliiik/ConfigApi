@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 ﻿using System.Text;
 using ConfigApi.Entities.Dtos;
+=======
+﻿using ConfigApi.Entities.Dtos;
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 using ConfigApi.Mvc.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +17,7 @@ public class ProductsController : Controller
 
     public ProductsController(IApiClient api) => _api = api;
 
+<<<<<<< HEAD
     public async Task<IActionResult> Index([FromQuery] ProductSearchRequest request)
     {
         if (request.Page < 1) request.Page = 1;
@@ -55,4 +60,17 @@ public class ProductsController : Controller
 
         return Json(result ?? new List<string>());
     }
+=======
+    public async Task<IActionResult> Index(string? search, int page = 1)
+    {
+        var query = $"/api/products?page={page}&pageSize=12";
+        if (!string.IsNullOrWhiteSpace(search))
+            query += $"&search={Uri.EscapeDataString(search)}";
+
+        var result = await _api.GetAsync<PagedResult<ProductListItemDto>>(query);
+
+        ViewBag.Search = search;
+        return View(result ?? new PagedResult<ProductListItemDto>());
+    }
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }

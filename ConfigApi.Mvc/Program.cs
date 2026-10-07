@@ -11,6 +11,7 @@ builder.Services.AddScoped<ITokenStore, TokenStore>();
 builder.Services.AddScoped<ITenantSelection, TenantSelection>();
 builder.Services.AddScoped<IApiClient, ApiClient>();
 
+<<<<<<< HEAD
 var redisConfig = builder.Configuration["Redis:Configuration"];
 var redisEnabled = builder.Configuration.GetValue<bool>("Redis:Enabled");
 
@@ -26,6 +27,9 @@ else
 {
     builder.Services.AddDistributedMemoryCache();
 }
+=======
+builder.Services.AddDistributedMemoryCache();
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(2);

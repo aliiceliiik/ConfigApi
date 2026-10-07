@@ -38,13 +38,19 @@ public class ApiClient : IApiClient
     {
         get
         {
+<<<<<<< HEAD
             var scheme = _config["Api:Scheme"] ?? "http";
             var host = _config["Api:Host"] ?? "localhost";
+=======
+            var host = _accessor.HttpContext!.Request.Host.Host;
+            var scheme = _config["Api:Scheme"] ?? "http";
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
             var port = _config["Api:Port"] ?? "5095";
             return $"{scheme}://{host}:{port}";
         }
     }
 
+<<<<<<< HEAD
     private string TenantHost
     {
         get
@@ -54,11 +60,16 @@ public class ApiClient : IApiClient
         }
     }
 
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     private HttpClient CreateRaw()
     {
         var client = _factory.CreateClient("api");
         client.BaseAddress = new Uri(BaseUrl);
+<<<<<<< HEAD
         client.DefaultRequestHeaders.Add("X-Tenant-Host", TenantHost);
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         return client;
     }
 

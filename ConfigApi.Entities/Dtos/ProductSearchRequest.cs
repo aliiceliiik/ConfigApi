@@ -1,5 +1,6 @@
 ﻿namespace ConfigApi.Entities.Dtos;
 
+<<<<<<< HEAD
 public enum ProductSort
 {
     Relevance = 0,
@@ -28,4 +29,11 @@ public class ProductSearchRequest
             ((int)Sort).ToString(),
             Page.ToString(),
             PageSize.ToString());
+=======
+public class ProductSearchRequest
+{
+    public string? Search { get; set; }
+    public int Page { get; set; } = 1;
+    public int PageSize { get; set; } = 20;
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }

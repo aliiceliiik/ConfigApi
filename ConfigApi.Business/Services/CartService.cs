@@ -1,5 +1,8 @@
 ﻿using ConfigApi.Business.Tenancy;
+<<<<<<< HEAD
 using ConfigApi.Context.Caching;
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 using ConfigApi.Context.Repositories;
 using ConfigApi.Entities.Dtos;
 
@@ -25,6 +28,7 @@ public interface ICartService
 public class CartService : ICartService
 {
     private const int MaxQuantityPerItem = 100;
+<<<<<<< HEAD
     private static readonly TimeSpan Ttl = TimeSpan.FromMinutes(10);
 
     private readonly ICartRepository _carts;
@@ -38,11 +42,23 @@ public class CartService : ICartService
         _carts = carts;
         _products = products;
         _cache = cache;
+=======
+
+    private readonly ICartRepository _carts;
+    private readonly IProductRepository _products;
+    private readonly ITenantContext _tenant;
+
+    public CartService(ICartRepository carts, IProductRepository products, ITenantContext tenant)
+    {
+        _carts = carts;
+        _products = products;
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         _tenant = tenant;
     }
 
     public async Task<CartDto> GetAsync()
     {
+<<<<<<< HEAD
         var key = CacheKeys.Cart(_tenant.TenantId, _tenant.UserId);
 
         return await _cache.GetOrSetAsync(key, Ttl, async () =>
@@ -52,6 +68,12 @@ public class CartService : ICartService
 
             return new CartDto { Id = cart.Id, Items = items.ToList() };
         });
+=======
+        var cart = await _carts.GetOrCreateForCurrentUserAsync(_tenant.UserId);
+        var items = await _carts.GetItemsAsync(cart.Id);
+
+        return new CartDto { Id = cart.Id, Items = items.ToList() };
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     }
 
     public async Task<CartResult> AddAsync(AddToCartRequest request)
@@ -81,7 +103,10 @@ public class CartService : ICartService
         else
             await _carts.UpdateItemQuantityAsync(existing.Id, targetQuantity);
 
+<<<<<<< HEAD
         await InvalidateAsync();
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         return CartResult.Ok();
     }
 
@@ -105,8 +130,11 @@ public class CartService : ICartService
                 $"Yeterli stok yok. Mevcut: {product.Stock} adet.");
 
         await _carts.UpdateItemQuantityAsync(item.Id, quantity);
+<<<<<<< HEAD
 
         await InvalidateAsync();
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         return CartResult.Ok();
     }
 
@@ -119,8 +147,11 @@ public class CartService : ICartService
             return CartResult.Fail(CartError.ItemNotFound, "Sepet satırı bulunamadı.");
 
         await _carts.RemoveItemAsync(item.Id);
+<<<<<<< HEAD
 
         await InvalidateAsync();
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         return CartResult.Ok();
     }
 
@@ -128,10 +159,14 @@ public class CartService : ICartService
     {
         var cart = await _carts.GetOrCreateForCurrentUserAsync(_tenant.UserId);
         await _carts.ClearAsync(cart.Id);
+<<<<<<< HEAD
 
         await InvalidateAsync();
     }
 
     private Task InvalidateAsync()
         => _cache.RemoveAsync(CacheKeys.Cart(_tenant.TenantId, _tenant.UserId));
+=======
+    }
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }

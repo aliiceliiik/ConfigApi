@@ -80,6 +80,7 @@ public class AdminController : ControllerBase
             ? NoContent()
             : NotFound(new { message = "Ürün bulunamadı." });
     }
+<<<<<<< HEAD
 
     [HttpPost("reindex")]
     [Authorize(Roles = UserRole.SuperAdmin)]
@@ -88,4 +89,6 @@ public class AdminController : ControllerBase
         var count = await _admin.ReindexProductsAsync();
         return Ok(new { indexed = count });
     }
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using ConfigApi.Context.Caching;
 using ConfigApi.Context.Factory;
 using ConfigApi.Context.Repositories;
@@ -6,13 +7,22 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
+=======
+﻿using ConfigApi.Context.Factory;
+using ConfigApi.Context.Repositories;
+using Microsoft.Extensions.DependencyInjection;
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 
 namespace ConfigApi.Context;
 
 public static class ContextServiceRegistration
 {
+<<<<<<< HEAD
     public static IServiceCollection AddContextServices(
         this IServiceCollection services, IConfiguration configuration)
+=======
+    public static IServiceCollection AddContextServices(this IServiceCollection services)
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     {
         services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
@@ -24,6 +34,7 @@ public static class ContextServiceRegistration
         services.AddScoped<IOrderRepository, OrderRepository>();
         services.AddScoped<IConfigRepository, ConfigRepository>();
 
+<<<<<<< HEAD
         AddCaching(services, configuration);
         AddSearch(services, configuration);
 
@@ -88,4 +99,8 @@ public static class ContextServiceRegistration
         services.AddSingleton<IProductSearchIndex, ElasticProductSearchIndex>();
         services.AddScoped<IProductSearchQuery, ElasticProductSearchQuery>();
     }
+=======
+        return services;
+    }
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }

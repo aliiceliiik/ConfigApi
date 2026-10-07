@@ -5,8 +5,11 @@ using ConfigApi.Api.Middleware;
 using ConfigApi.Api.Seed;
 using ConfigApi.Business;
 using ConfigApi.Context.Factory;
+<<<<<<< HEAD
 using ConfigApi.Context.Repositories;
 using ConfigApi.Context.Search;
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -44,7 +47,11 @@ builder.Services.AddSwaggerGen(options =>
         });
 });
 
+<<<<<<< HEAD
 builder.Services.AddBusinessServices(builder.Configuration);
+=======
+builder.Services.AddBusinessServices();
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 
 var jwt = builder.Configuration.GetSection("Jwt");
 
@@ -108,6 +115,7 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
+<<<<<<< HEAD
     var sp = scope.ServiceProvider;
 
     var factory = sp.GetRequiredService<IDbConnectionFactory>();
@@ -119,6 +127,10 @@ using (var scope = app.Services.CreateScope())
         sp.GetRequiredService<IProductSearchIndex>(),
         sp.GetRequiredService<IProductRepository>(),
         sp.GetRequiredService<ILogger<Program>>());
+=======
+    var factory = scope.ServiceProvider.GetRequiredService<IDbConnectionFactory>();
+    await DatabaseSeeder.SeedAsync(factory);
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }
 
 app.Run();

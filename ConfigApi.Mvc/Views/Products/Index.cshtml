@@ -1,12 +1,16 @@
 ﻿@model PagedResult<ProductListItemDto>
 @{
     ViewData["Title"] = "Ürünler";
+<<<<<<< HEAD
     var filter = ViewBag.Filter as ProductSearchRequest ?? new ProductSearchRequest();
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     var totalPages = Model.PageSize > 0
         ? (int)Math.Ceiling((double)Model.TotalCount / Model.PageSize)
         : 0;
 }
 
+<<<<<<< HEAD
 @functions {
     Dictionary<string, string> RouteValues(ProductSearchRequest filter, int page)
     {
@@ -86,6 +90,23 @@
     <div class="alert alert-light border text-center py-5">
         Aramanıza uygun ürün bulunamadı.
     </div>
+=======
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="mb-0">Ürünler</h4>
+
+    <form asp-action="Index" method="get" class="d-flex" style="max-width:320px">
+        <input type="text" name="search" value="@ViewBag.Search"
+               class="form-control form-control-sm me-2" placeholder="Ürün ara..." />
+        <button type="submit" class="btn btn-sm btn-outline-primary">Ara</button>
+    </form>
+</div>
+
+<partial name="_Message" />
+
+@if (!Model.Items.Any())
+{
+    <div class="alert alert-light border text-center py-5">Ürün bulunamadı.</div>
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }
 else
 {
@@ -129,6 +150,7 @@ else
     @if (totalPages > 1)
     {
         <nav class="mt-4">
+<<<<<<< HEAD
             <ul class="pagination justify-content-center flex-wrap">
                 <li class="page-item @(Model.Page <= 1 ? "disabled" : "")">
                     <a class="page-link" asp-action="Index"
@@ -154,10 +176,21 @@ else
                     <a class="page-link" asp-action="Index"
                        asp-all-route-data="@RouteValues(filter, Model.Page + 1)">&raquo;</a>
                 </li>
+=======
+            <ul class="pagination justify-content-center">
+                @for (var i = 1; i <= totalPages; i++)
+                {
+                    <li class="page-item @(i == Model.Page ? "active" : "")">
+                        <a class="page-link" asp-action="Index"
+                           asp-route-page="@i" asp-route-search="@ViewBag.Search">@i</a>
+                    </li>
+                }
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
             </ul>
         </nav>
     }
 }
+<<<<<<< HEAD
 
 @section Scripts {
 <script>
@@ -222,3 +255,5 @@ else
 })();
 </script>
 }
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43

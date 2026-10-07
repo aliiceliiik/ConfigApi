@@ -18,7 +18,11 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         var tenant = HttpContext.Items[TenantResolutionMiddleware.TenantItemKey] as Tenant;
+<<<<<<< HEAD
         var host = HttpContext.Items[TenantResolutionMiddleware.TenantHostItemKey] as string ?? "";
+=======
+        var host = HttpContext.Request.Host.Host.ToLowerInvariant();
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 
         if (tenant is null && !host.StartsWith("admin."))
             return BadRequest(new { message = "Geçersiz adres." });

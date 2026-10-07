@@ -1,7 +1,11 @@
 ﻿using ConfigApi.Business.Tenancy;
+<<<<<<< HEAD
 using ConfigApi.Context.Caching;
 using ConfigApi.Context.Repositories;
 using ConfigApi.Context.Search;
+=======
+using ConfigApi.Context.Repositories;
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 using ConfigApi.Entities.Dtos;
 using ConfigApi.Entities.Entities;
 using ConfigApi.Entities.Enums;
@@ -20,7 +24,10 @@ public interface IAdminService
     Task<Guid> CreateProductAsync(ProductSaveRequest request);
     Task<bool> UpdateProductAsync(Guid id, ProductSaveRequest request);
     Task<bool> SetProductActiveAsync(Guid id, bool isActive);
+<<<<<<< HEAD
     Task<int> ReindexProductsAsync();
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 }
 
 public class AdminService : IAdminService
@@ -29,23 +36,33 @@ public class AdminService : IAdminService
     private readonly IUserRepository _users;
     private readonly ITenantRepository _tenants;
     private readonly IProductRepository _products;
+<<<<<<< HEAD
     private readonly IProductSyncService _sync;
     private readonly IProductSearchIndex _index;
     private readonly ICacheService _cache;
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     private readonly ITenantContext _tenant;
 
     public AdminService(IOrderRepository orders, IUserRepository users,
                         ITenantRepository tenants, IProductRepository products,
+<<<<<<< HEAD
                         IProductSyncService sync, IProductSearchIndex index,
                         ICacheService cache, ITenantContext tenant)
+=======
+                        ITenantContext tenant)
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     {
         _orders = orders;
         _users = users;
         _tenants = tenants;
         _products = products;
+<<<<<<< HEAD
         _sync = sync;
         _index = index;
         _cache = cache;
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         _tenant = tenant;
     }
 
@@ -96,6 +113,7 @@ public class AdminService : IAdminService
     }
 
     public async Task<Guid> CreateProductAsync(ProductSaveRequest request)
+<<<<<<< HEAD
     {
         var product = await _products.CreateAsync(request);
         await _sync.OnProductSavedAsync(product);
@@ -133,6 +151,15 @@ public class AdminService : IAdminService
 
         return count;
     }
+=======
+        => await _products.CreateAsync(request);
+
+    public async Task<bool> UpdateProductAsync(Guid id, ProductSaveRequest request)
+        => await _products.UpdateAsync(id, request);
+
+    public async Task<bool> SetProductActiveAsync(Guid id, bool isActive)
+        => await _products.SetActiveAsync(id, isActive);
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
 
     private static ProductAdminDto Map(Product p) => new()
     {

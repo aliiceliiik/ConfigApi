@@ -6,15 +6,22 @@ namespace ConfigApi.Api.Seed;
 
 public static class DatabaseSeeder
 {
+<<<<<<< HEAD
     public static async Task SeedAsync(IDbConnectionFactory factory, int bulkProductCount = 0)
+=======
+    public static async Task SeedAsync(IDbConnectionFactory factory)
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     {
         using var conn = factory.Create();
 
         await CreateSchemaAsync(conn);
         await SeedTenantsAsync(conn);
         await SeedUsersAsync(conn);
+<<<<<<< HEAD
 
         await ProductBulkSeeder.SeedAsync(factory, bulkProductCount);
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
     }
 
     private static async Task CreateSchemaAsync(System.Data.IDbConnection conn)
@@ -180,11 +187,14 @@ public static class DatabaseSeeder
         CREATE INDEX IX_Products_Tenant_Active ON Products(TenantId, IsActive) INCLUDE (Name, Price);",
 
         @"
+<<<<<<< HEAD
         IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_Products_Tenant_Active_Name')
         CREATE INDEX IX_Products_Tenant_Active_Name
             ON Products(TenantId, IsActive, Name) INCLUDE (Price, Stock);",
 
         @"
+=======
+>>>>>>> bcdf37d9dda12d4a7aca61ef0d9fa06bf7e79f43
         IF OBJECT_ID('dbo.Carts', 'U') IS NULL
         CREATE TABLE Carts (
             Id         UNIQUEIDENTIFIER NOT NULL DEFAULT NEWSEQUENTIALID(),
